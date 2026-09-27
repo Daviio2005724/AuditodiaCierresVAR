@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>AuditodiaCierresVAR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>Generar Reporte de Cierres</h1>
+        <p class="sub">Carga el CSV de evidencias de cierre de caja y obtén el estado de revisión por punto de venta.
+        </p>
+
+        <div class="card">
+            <div class="drop" id="drop">
+                <div><strong>Haz clic o arrastra aquí tu archivo CSV</strong></div>
+                <div class="hint">Debe tener las columnas: fecha, pdv, estado</div>
+                <input type="file" id="file" accept=".csv">
+            </div>
+            <div class="err" id="err"></div>
+        </div>
+
+        <div class="card" id="resultCard" style="display:none;">
+            <div class="toolbar">
+                <label>Umbral amarillo (días pendientes ≥)</label>
+                <select id="thYellow">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                </select>
+                <label>Umbral rojo (días pendientes ≥)</label>
+                <select id="thRed">
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <button id="exportBtn" style="margin-left:auto;">⬇ Exportar CSV</button>
+            </div>
+            <div class="err" id="exportErr"></div>
+            <div class="tablewrap">
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>PDV</th>
+                            <th>Días pendientes</th>
+                            <th>Días revisados</th>
+                            <th>Pendientes</th>
+                            <th>% Pendiente</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="sctipt.js"></script>
+</body>
+
+</html>
