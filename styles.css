@@ -84,8 +84,13 @@ p.sub {
     border-color: var(--green);
 }
 
+/* Regla corregida para no usar display: none */
 .drop input {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
 }
 
 .drop .hint {
