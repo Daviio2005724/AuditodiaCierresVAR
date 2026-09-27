@@ -72,9 +72,6 @@ function render() {
 document.getElementById('thYellow').addEventListener('change', () => { if (rows.length) render(); });
 document.getElementById('thRed').addEventListener('change', () => { if (rows.length) render(); });
 
-let downloadsCap = null;
-claude.use('downloads').then(c => { downloadsCap = c; if (!c) document.getElementById('exportBtn').style.display = 'none'; });
-
 function toCsv(list) {
     const headers = ['PDV', 'Dias pendientes', 'Dias revisados', 'Pendientes', '% Pendiente', 'Estado'];
     const escape = v => `"${String(v).replace(/"/g, '""')}"`;
@@ -85,16 +82,26 @@ function toCsv(list) {
     return lines.join('\r\n');
 }
 
-document.getElementById('exportBtn').addEventListener('click', async () => {
+// Descarga estándar de navegador: funciona en GitHub Pages, localhost, etc.
+function downloadCsv(filename, csvText) {
+    const blob = new Blob([csvText], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+document.getElementById('exportBtn').addEventListener('click', () => {
     const errEl = document.getElementById('exportErr');
     errEl.textContent = '';
     if (!rows.length) { errEl.textContent = 'Primero carga un CSV.'; return; }
-    if (!downloadsCap) { errEl.textContent = 'La exportación no está disponible en esta vista.'; return; }
-    const csv = toCsv(process());
     try {
-        await downloadsCap.save({ filename: 'reporte_cierres_pendientes.csv', data: csv });
+        downloadCsv('reporte_cierres_pendientes.csv', toCsv(process()));
     } catch (e) {
-        if (e && e.code === 'declined') return;
         errEl.textContent = 'No se pudo exportar el archivo.';
     }
 });
