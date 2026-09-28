@@ -1,66 +1,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 :root {
-    /* Paleta inspirada en BACU */
-    --band: #181A1B; /* Tono oscuro para el encabezado */
-    --band-text: #F8F6F2;
-    --band-muted: #A3A6A8;
+    /* Paleta exacta basada en tu imagen */
+    --c-black: #131313;
+    --c-dark-grey: #2B2B2B;
+    --c-muted-grey: #86868B;
+    --c-blue: #1561F0;
+
+    /* Asignación a la interfaz */
+    --band: var(--c-black);
+    --band-text: #ffffff;
+    --band-muted: var(--c-muted-grey);
     
-    --bg: #F8F6F2; /* Fondo crema característico de Bacu */
-    --card: #FFFFFF;
+    --bg: #131313; /* Fondo principal oscuro */
+    --card: #2B2B2B; /* Superficies de tarjetas */
+    --text: #ffffff;
+    --muted: var(--c-muted-grey);
+    --border: rgba(134, 134, 139, 0.25);
+    --head: #222222; /* Fondo del encabezado de la tabla */
+    --hover: rgba(255, 255, 255, 0.05);
     
-    --text: #181A1B; /* Texto casi negro para máximo contraste */
-    --muted: #6B6E70;
-    --border: #E0DDD6; /* Bordes suaves que combinan con el fondo crema */
-    --head: #F1EFEA; /* Color sutil para cabeceras de tabla y dropzone */
-    --hover: #F2EBE5;
+    --accent: var(--c-blue); /* Azul eléctrico como color principal de acción */
+    --accent-ink: #ffffff;
+    --accent-soft: rgba(21, 97, 240, 0.18);
     
-    --accent: #E84229; /* Rojo/Naranja característico de BACU */
-    --accent-ink: #FFFFFF;
-    --accent-soft: rgba(232, 66, 41, 0.12); /* Versión suave del acento para hover/fondos */
+    /* Estados */
+    --red: #e63946;
+    --yellow: #f1c40f;
+    --green: #2ecc71;
     
-    /* Colores de estado (semaforización) */
-    --red: #E84229; /* Alineado al acento */
-    --yellow: #F0A500;
-    --green: #29823B;
-    
-    --radius: 8px; /* Bordes un poco más redondeados y amigables */
+    --radius: 6px;
     --font: "Poppins", "Segoe UI", -apple-system, Roboto, Arial, sans-serif;
     
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-/* Modo oscuro opcional (adaptado a la misma línea gráfica) */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --band: #101213;
-        --bg: #181A1B;
-        --card: #202224;
-        --text: #F8F6F2;
-        --muted: #9E9F9F;
-        --border: #323537;
-        --head: #272A2C;
-        --hover: #2F3335;
-        --accent: #FF553D; /* Naranja un poco más brillante para fondos oscuros */
-        --accent-ink: #FFFFFF;
-        --accent-soft: rgba(255, 85, 61, 0.15);
-    }
-}
-
-:root[data-theme="dark"] {
-    --band: #101213;
-    --bg: #181A1B;
-    --card: #202224;
-    --text: #F8F6F2;
-    --muted: #9E9F9F;
-    --border: #323537;
-    --head: #272A2C;
-    --hover: #2F3335;
-    --accent: #FF553D;
-    --accent-ink: #FFFFFF;
-    --accent-soft: rgba(255, 85, 61, 0.15);
 }
 
 * {
@@ -105,9 +79,9 @@ h1 {
     margin: 0;
     padding: 34px 0 6px;
     color: var(--band-text);
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
     line-height: 1.2;
 }
 
@@ -125,21 +99,21 @@ p.sub {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: 0 4px 12px rgba(24, 26, 27, 0.04);
-    padding: 24px;
-    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 22px;
+    margin-bottom: 20px;
 }
 
 /* ---------- Zona de carga ---------- */
 .drop {
     position: relative;
-    border: 1.5px dashed var(--muted);
+    border: 1px dashed var(--muted);
     border-radius: var(--radius);
-    background: var(--head);
-    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 36px 20px;
     text-align: center;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: border-color .15s, background-color .15s;
 }
 
 .drop:hover,
@@ -163,23 +137,23 @@ p.sub {
 
 .drop strong {
     font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--accent);
+    font-size: 1rem;
+    color: #ffffff;
 }
 
 .drop .hint {
     color: var(--muted);
     font-size: .85rem;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 /* ---------- Barra de herramientas ---------- */
 .toolbar {
     display: flex;
-    gap: 10px 12px;
+    gap: 8px 12px;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
     border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
 }
@@ -198,16 +172,16 @@ select,
 button {
     font: inherit;
     font-size: .9rem;
-    padding: 9px 16px;
+    padding: 8px 14px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--card);
     color: var(--text);
-    transition: all .2s ease;
+    transition: border-color .15s, background-color .15s;
 }
 
 select {
-    min-width: 70px;
+    min-width: 64px;
     cursor: pointer;
     accent-color: var(--accent);
 }
@@ -232,11 +206,8 @@ button:active {
 }
 
 button:disabled {
-    opacity: .5;
+    opacity: .4;
     cursor: not-allowed;
-    background: var(--card) !important;
-    color: var(--text) !important;
-    border-color: var(--border) !important;
 }
 
 select:focus-visible,
@@ -256,48 +227,49 @@ button:focus-visible {
 #exportImgBtn:hover {
     background: var(--accent);
     color: var(--accent-ink);
-    filter: brightness(1.1);
-    box-shadow: 0 4px 10px rgba(232, 66, 41, 0.25);
+    filter: brightness(1.15);
+    box-shadow: 0 0 12px rgba(21, 97, 240, 0.4);
 }
 
-/* ---------- Tabla ---------- */
+/* ---------- Tabla con Sticky Header ---------- */
 .tablewrap {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     max-height: 70vh;
+    position: relative; /* Permite mantener referencia para el sticky */
     border: 1px solid var(--border);
     border-radius: var(--radius);
 }
 
 table {
     width: 100%;
-    border-collapse: separate; /* Obligatorio para que los bordes fijos no se rompan */
+    border-collapse: separate;
     border-spacing: 0;
     font-size: .9rem;
     min-width: 600px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
 }
 
 th,
 td {
-    padding: 13px 16px;
+    padding: 11px 14px;
     border-bottom: 1px solid var(--border);
     text-align: left;
     white-space: nowrap;
 }
 
+/* Encabezado Fijo */
 th {
-    position: -webkit-sticky; /* Para compatibilidad con Safari */
+    position: -webkit-sticky;
     position: sticky;
-    top: 0; /* Lo fija exactamente en la parte superior del contenedor */
-    z-index: 10; /* Asegura que quede por encima de las celdas (td) al bajar */
-    background: var(--head); /* Es VITAL que tenga fondo sólido, si es transparente se cruzará con el texto */
+    top: 0;
+    z-index: 10; /* Mantener siempre encima al bajar */
+    background: var(--head); /* Fondo sólido para que no se traslape el contenido */
     color: var(--text);
     font-weight: 600;
-    font-size: .85rem;
+    font-size: .84rem;
     border-bottom: 2px solid var(--border);
-    padding: 13px 16px;
-    text-align: left;
-    white-space: nowrap;
 }
 
 tbody tr:last-child td {
@@ -313,33 +285,32 @@ td.pdv {
     white-space: normal;
 }
 
-/* Alineación a la derecha */
+/* Alineaciones */
 th:nth-child(n+3):nth-child(-n+5),
 td:nth-child(n+3):nth-child(-n+5) {
     text-align: right;
 }
 
-/* Estado centrado */
 th:last-child,
 td:last-child {
     text-align: center;
 }
 
-/* Franja lateral según estado */
+/* Indicadores laterales de estado */
 tbody tr td:first-child {
-    box-shadow: inset 4px 0 0 transparent;
+    box-shadow: inset 3px 0 0 transparent;
 }
 
 tbody tr:has(.dot.red) td:first-child {
-    box-shadow: inset 4px 0 0 var(--red);
+    box-shadow: inset 3px 0 0 var(--red);
 }
 
 tbody tr:has(.dot.yellow) td:first-child {
-    box-shadow: inset 4px 0 0 var(--yellow);
+    box-shadow: inset 3px 0 0 var(--yellow);
 }
 
 tbody tr:has(.dot.green) td:first-child {
-    box-shadow: inset 4px 0 0 var(--green);
+    box-shadow: inset 3px 0 0 var(--green);
 }
 
 .dot {
@@ -358,14 +329,13 @@ tbody tr:has(.dot.green) td:first-child {
 .empty {
     color: var(--muted);
     text-align: center;
-    padding: 30px;
+    padding: 24px;
 }
 
 .err {
     color: var(--red);
     font-size: .85rem;
-    margin-top: 10px;
-    font-weight: 500;
+    margin-top: 8px;
 }
 
 .err:empty {
@@ -380,7 +350,7 @@ tbody tr:has(.dot.green) td:first-child {
 
     h1 {
         padding-top: 26px;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
     p.sub {
@@ -388,11 +358,11 @@ tbody tr:has(.dot.green) td:first-child {
     }
 
     .card {
-        padding: 16px;
+        padding: 14px;
     }
 
     .drop {
-        padding: 30px 16px;
+        padding: 26px 14px;
     }
 
     .toolbar label {
