@@ -106,4 +106,111 @@ document.getElementById('exportBtn').addEventListener('click', () => {
     }
 });
 
+//===================================================================================
+
+// ---- Exportar como imagen (compacta, tipo tabla de hoja de cálculo) ----
+function toImageCanvas(list) {
+    const headers = ['PDV', 'Dias pendientes', 'Dias revisados', 'Pendientes', '% Pendiente', 'Estado'];
+    const dotColors = { red: '#e0455a', yellow: '#f2b90c', green: '#2fb673' };
+    const fontFamily = 'Arial, Helvetica, sans-serif';
+    const normal = `14px ${fontFamily}`;
+    const bold = `bold 14px ${fontFamily}`;
+    const rowH = 30, padX = 12, scale = 2;
+
+    const data = list.map(r => [
+        r.pdv, r.diasPendientes, String(r.revisados), String(r.pendientes),
+        r.pct.toFixed(1).replace('.', ',') + '%', ''
+    ]);
+
+    // Medir anchos de columna según el contenido
+    const m = document.createElement('canvas').getContext('2d');
+    const widths = headers.map((h, i) => {
+        m.font = bold;
+        let w = m.measureText(h).width;
+        m.font = i === 0 ? bold : normal;
+        data.forEach(row => { w = Math.max(w, m.measureText(row[i]).width); });
+        return Math.ceil(w + padX * 2);
+    });
+    widths[5] = Math.max(widths[5], 70);
+
+    const width = widths.reduce((a, b) => a + b, 0);
+    const height = rowH * (data.length + 1);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = (width + 2) * scale;
+    canvas.height = (height + 2) * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+    ctx.translate(1, 1);
+
+    // Fondo siempre blanco (aunque la página esté en modo oscuro)
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(-1, -1, width + 2, height + 2);
+
+    // Líneas de la cuadrícula
+    ctx.strokeStyle = '#d0d0d0';
+    ctx.lineWidth = 1;
+    for (let r = 1; r <= data.length; r++) {
+        ctx.beginPath(); ctx.moveTo(0, r * rowH); ctx.lineTo(width, r * rowH); ctx.stroke();
+    }
+    let x = 0;
+    for (let c = 0; c < widths.length - 1; c++) {
+        x += widths[c];
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+    }
+
+    // Texto y puntos
+    ctx.fillStyle = '#000000';
+    ctx.textBaseline = 'middle';
+    const drawRow = (cells, y, isHeader, estado) => {
+        let cx = 0;
+        cells.forEach((text, i) => {
+            const cy = y + rowH / 2;
+            if (i === 5 && !isHeader) {
+                ctx.fillStyle = dotColors[estado];
+                ctx.beginPath(); ctx.arc(cx + widths[i] / 2, cy, 7, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#000000';
+            } else {
+                ctx.font = (isHeader || i === 0) ? bold : normal;
+                if (i === 0) { ctx.textAlign = 'left'; ctx.fillText(text, cx + padX, cy); }
+                else { ctx.textAlign = 'center'; ctx.fillText(text, cx + widths[i] / 2, cy); }
+            }
+            cx += widths[i];
+        });
+    };
+    drawRow(headers, 0, true);
+    data.forEach((row, i) => drawRow(row, (i + 1) * rowH, false, list[i].estado));
+
+    // Borde exterior y línea bajo el encabezado
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(0, 0, width, height);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, rowH); ctx.lineTo(width, rowH); ctx.stroke();
+
+    return canvas;
+}
+
+document.getElementById('exportImgBtn').addEventListener('click', () => {
+    const errEl = document.getElementById('exportErr');
+    errEl.textContent = '';
+    if (!rows.length) { errEl.textContent = 'Primero carga un CSV.'; return; }
+    try {
+        const list = process();
+        if (!list.length) { errEl.textContent = 'No hay datos para exportar.'; return; }
+        toImageCanvas(list).toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reporte_cierres_pendientes.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 'image/png');
+    } catch (e) {
+        errEl.textContent = 'No se pudo exportar la imagen.';
+    }
+});
+
 setupDrop();
