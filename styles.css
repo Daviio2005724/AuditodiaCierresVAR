@@ -1,68 +1,73 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 :root {
-    /* Paleta principal */
-    --band: #1d5238;
-    --band-text: #ffffff;
-    --band-muted: #91c1d6;
-    --bg: #faf3ea;
-    --card: #ffffff;
-    --text: #1d5238;
-    --muted: rgba(29, 82, 56, 0.65); /* #1d5238 con opacidad */
-    --border: #91c1d6;
-    --head: #faf3ea;
-    --hover: rgba(145, 193, 214, 0.2); /* #91c1d6 con opacidad */
-    --accent: #1d5238;
-    --accent-ink: #ffffff;
-    --accent-soft: rgba(145, 193, 214, 0.3);
+    /* Paleta inspirada en BACU */
+    --band: #181A1B; /* Tono oscuro para el encabezado */
+    --band-text: #F8F6F2;
+    --band-muted: #A3A6A8;
     
-    /* Colores semánticos de estado */
-    --red: #c8323c;
-    --yellow: #d9a20b;
-    --green: #1d5238; /* Integrado al verde de la marca */
+    --bg: #F8F6F2; /* Fondo crema característico de Bacu */
+    --card: #FFFFFF;
     
-    --radius: 6px;
+    --text: #181A1B; /* Texto casi negro para máximo contraste */
+    --muted: #6B6E70;
+    --border: #E0DDD6; /* Bordes suaves que combinan con el fondo crema */
+    --head: #F1EFEA; /* Color sutil para cabeceras de tabla y dropzone */
+    --hover: #F2EBE5;
+    
+    --accent: #E84229; /* Rojo/Naranja característico de BACU */
+    --accent-ink: #FFFFFF;
+    --accent-soft: rgba(232, 66, 41, 0.12); /* Versión suave del acento para hover/fondos */
+    
+    /* Colores de estado (semaforización) */
+    --red: #E84229; /* Alineado al acento */
+    --yellow: #F0A500;
+    --green: #29823B;
+    
+    --radius: 8px; /* Bordes un poco más redondeados y amigables */
     --font: "Poppins", "Segoe UI", -apple-system, Roboto, Arial, sans-serif;
+    
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* Modo oscuro opcional (adaptado a la misma línea gráfica) */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-        --band: #1d5238;
-        --bg: #113122; /* Tono más oscuro basado en #1d5238 */
-        --card: rgba(255, 255, 255, 0.05);
-        --text: #faf3ea;
-        --muted: #91c1d6;
-        --border: rgba(145, 193, 214, 0.3);
-        --head: rgba(255, 255, 255, 0.08);
-        --hover: rgba(255, 255, 255, 0.12);
-        --accent: #91c1d6;
-        --accent-ink: #1d5238;
-        --accent-soft: rgba(145, 193, 214, 0.15);
+        --band: #101213;
+        --bg: #181A1B;
+        --card: #202224;
+        --text: #F8F6F2;
+        --muted: #9E9F9F;
+        --border: #323537;
+        --head: #272A2C;
+        --hover: #2F3335;
+        --accent: #FF553D; /* Naranja un poco más brillante para fondos oscuros */
+        --accent-ink: #FFFFFF;
+        --accent-soft: rgba(255, 85, 61, 0.15);
     }
 }
 
 :root[data-theme="dark"] {
-    --band: #1d5238;
-    --bg: #113122;
-    --card: rgba(255, 255, 255, 0.05);
-    --text: #faf3ea;
-    --muted: #91c1d6;
-    --border: rgba(145, 193, 214, 0.3);
-    --head: rgba(255, 255, 255, 0.08);
-    --hover: rgba(255, 255, 255, 0.12);
-    --accent: #91c1d6;
-    --accent-ink: #1d5238;
-    --accent-soft: rgba(145, 193, 214, 0.15);
+    --band: #101213;
+    --bg: #181A1B;
+    --card: #202224;
+    --text: #F8F6F2;
+    --muted: #9E9F9F;
+    --border: #323537;
+    --head: #272A2C;
+    --hover: #2F3335;
+    --accent: #FF553D;
+    --accent-ink: #FFFFFF;
+    --accent-soft: rgba(255, 85, 61, 0.15);
 }
 
 * {
     box-sizing: border-box;
 }
 
-/* La banda superior también cubre la zona segura en celulares con notch */
+/* La banda superior cubre la zona segura */
 html {
     background: linear-gradient(var(--band) env(safe-area-inset-top, 0px), var(--bg) 0);
     scroll-padding-top: env(safe-area-inset-top, 0px);
@@ -88,8 +93,7 @@ body {
     padding: 0 16px 56px;
 }
 
-/* ---------- Encabezado: banda de ancho completo ---------- */
-
+/* ---------- Encabezado ---------- */
 h1,
 p.sub {
     background: var(--band);
@@ -101,9 +105,9 @@ h1 {
     margin: 0;
     padding: 34px 0 6px;
     color: var(--band-text);
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     font-weight: 600;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
     line-height: 1.2;
 }
 
@@ -117,27 +121,25 @@ p.sub {
 }
 
 /* ---------- Tarjetas ---------- */
-
 .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: 0 1px 2px rgba(29, 82, 56, .1);
-    padding: 22px;
-    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(24, 26, 27, 0.04);
+    padding: 24px;
+    margin-bottom: 24px;
 }
 
 /* ---------- Zona de carga ---------- */
-
 .drop {
     position: relative;
-    border: 1px dashed var(--muted);
-    border-radius: 4px;
+    border: 1.5px dashed var(--muted);
+    border-radius: var(--radius);
     background: var(--head);
-    padding: 36px 20px;
+    padding: 40px 20px;
     text-align: center;
     cursor: pointer;
-    transition: border-color .15s, background-color .15s;
+    transition: all .2s ease;
 }
 
 .drop:hover,
@@ -161,23 +163,23 @@ p.sub {
 
 .drop strong {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.05rem;
+    color: var(--accent);
 }
 
 .drop .hint {
     color: var(--muted);
     font-size: .85rem;
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 /* ---------- Barra de herramientas ---------- */
-
 .toolbar {
     display: flex;
-    gap: 8px 12px;
+    gap: 10px 12px;
     align-items: center;
-    margin-bottom: 18px;
-    padding-bottom: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
 }
@@ -196,16 +198,16 @@ select,
 button {
     font: inherit;
     font-size: .9rem;
-    padding: 8px 14px;
-    border-radius: 4px;
+    padding: 9px 16px;
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--card);
     color: var(--text);
-    transition: border-color .15s, background-color .15s;
+    transition: all .2s ease;
 }
 
 select {
-    min-width: 64px;
+    min-width: 70px;
     cursor: pointer;
     accent-color: var(--accent);
 }
@@ -222,6 +224,7 @@ button:hover {
 
 button:hover {
     background: var(--accent-soft);
+    color: var(--accent);
 }
 
 button:active {
@@ -231,6 +234,9 @@ button:active {
 button:disabled {
     opacity: .5;
     cursor: not-allowed;
+    background: var(--card) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
 }
 
 select:focus-visible,
@@ -244,21 +250,23 @@ button:focus-visible {
     background: var(--accent);
     border-color: var(--accent);
     color: var(--accent-ink);
+    font-weight: 600;
 }
 
 #exportImgBtn:hover {
     background: var(--accent);
-    filter: brightness(1.12);
+    color: var(--accent-ink);
+    filter: brightness(1.1);
+    box-shadow: 0 4px 10px rgba(232, 66, 41, 0.25);
 }
 
 /* ---------- Tabla ---------- */
-
 .tablewrap {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     max-height: 70vh;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius);
 }
 
 table {
@@ -273,7 +281,7 @@ table {
 
 th,
 td {
-    padding: 11px 14px;
+    padding: 13px 16px;
     border-bottom: 1px solid var(--border);
     text-align: left;
     white-space: nowrap;
@@ -286,7 +294,7 @@ th {
     background: var(--head);
     color: var(--text);
     font-weight: 600;
-    font-size: .84rem;
+    font-size: .85rem;
     border-bottom: 2px solid var(--border);
 }
 
@@ -303,7 +311,7 @@ td.pdv {
     white-space: normal;
 }
 
-/* Revisados, Pendientes y % a la derecha */
+/* Alineación a la derecha */
 th:nth-child(n+3):nth-child(-n+5),
 td:nth-child(n+3):nth-child(-n+5) {
     text-align: right;
@@ -315,55 +323,47 @@ td:last-child {
     text-align: center;
 }
 
-/* Franja lateral según el estado de cada PDV */
+/* Franja lateral según estado */
 tbody tr td:first-child {
-    box-shadow: inset 3px 0 0 transparent;
+    box-shadow: inset 4px 0 0 transparent;
 }
 
 tbody tr:has(.dot.red) td:first-child {
-    box-shadow: inset 3px 0 0 var(--red);
+    box-shadow: inset 4px 0 0 var(--red);
 }
 
 tbody tr:has(.dot.yellow) td:first-child {
-    box-shadow: inset 3px 0 0 var(--yellow);
+    box-shadow: inset 4px 0 0 var(--yellow);
 }
 
 tbody tr:has(.dot.green) td:first-child {
-    box-shadow: inset 3px 0 0 var(--green);
+    box-shadow: inset 4px 0 0 var(--green);
 }
 
 .dot {
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     vertical-align: middle;
 }
 
-.dot.red {
-    background: var(--red);
-}
-
-.dot.yellow {
-    background: var(--yellow);
-}
-
-.dot.green {
-    background: var(--green);
-}
+.dot.red { background: var(--red); }
+.dot.yellow { background: var(--yellow); }
+.dot.green { background: var(--green); }
 
 /* ---------- Mensajes ---------- */
-
 .empty {
     color: var(--muted);
     text-align: center;
-    padding: 24px;
+    padding: 30px;
 }
 
 .err {
     color: var(--red);
     font-size: .85rem;
-    margin-top: 8px;
+    margin-top: 10px;
+    font-weight: 500;
 }
 
 .err:empty {
@@ -371,7 +371,6 @@ tbody tr:has(.dot.green) td:first-child {
 }
 
 /* ---------- Móvil ---------- */
-
 @media (max-width: 640px) {
     .wrap {
         padding: 0 12px 44px;
@@ -379,7 +378,7 @@ tbody tr:has(.dot.green) td:first-child {
 
     h1 {
         padding-top: 26px;
-        font-size: 1.3rem;
+        font-size: 1.4rem;
     }
 
     p.sub {
@@ -387,11 +386,11 @@ tbody tr:has(.dot.green) td:first-child {
     }
 
     .card {
-        padding: 14px;
+        padding: 16px;
     }
 
     .drop {
-        padding: 26px 14px;
+        padding: 30px 16px;
     }
 
     .toolbar label {
