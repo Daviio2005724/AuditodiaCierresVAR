@@ -1,17 +1,19 @@
 :root {
-    --bg: #f3f5f8;
+    --bg: #f2f4f9;
     --card: #ffffff;
-    --text: #182230;
-    --muted: #64707f;
-    --border: #dde2e9;
-    --head: #edf0f5;
-    --hover: #f6f8fb;
-    --accent: #2b4c7e;
-    --accent-soft: #e6edf7;
+    --text: #161b2e;
+    --muted: #626b82;
+    --border: #dfe3ee;
+    --head: #eef1f8;
+    --hover: #f5f7fc;
+    --accent: #3a56d4;
+    --accent-ink: #ffffff;
+    --accent-soft: #e9edfc;
     --red: #e0455a;
     --yellow: #f2b90c;
     --green: #2fb673;
-    --radius: 10px;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(22, 27, 46, .06), 0 12px 28px -16px rgba(22, 27, 46, .18);
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -19,28 +21,32 @@
 
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-        --bg: #12151b;
-        --card: #1a1e26;
-        --text: #e8ecf2;
-        --muted: #97a1af;
-        --border: #2a303b;
-        --head: #212732;
-        --hover: #1f2430;
-        --accent: #8db0e8;
-        --accent-soft: #232e42;
+        --bg: #0f121c;
+        --card: #171b28;
+        --text: #e9ecf6;
+        --muted: #98a1b8;
+        --border: #283047;
+        --head: #1e2334;
+        --hover: #1c2131;
+        --accent: #8fa6ff;
+        --accent-ink: #0f121c;
+        --accent-soft: #21294a;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 28px -16px rgba(0, 0, 0, .6);
     }
 }
 
 :root[data-theme="dark"] {
-    --bg: #12151b;
-    --card: #1a1e26;
-    --text: #e8ecf2;
-    --muted: #97a1af;
-    --border: #2a303b;
-    --head: #212732;
-    --hover: #1f2430;
-    --accent: #8db0e8;
-    --accent-soft: #232e42;
+    --bg: #0f121c;
+    --card: #171b28;
+    --text: #e9ecf6;
+    --muted: #98a1b8;
+    --border: #283047;
+    --head: #1e2334;
+    --hover: #1c2131;
+    --accent: #8fa6ff;
+    --accent-ink: #0f121c;
+    --accent-soft: #21294a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 28px -16px rgba(0, 0, 0, .6);
 }
 
 * {
@@ -64,19 +70,38 @@ html {
 .wrap {
     max-width: 960px;
     margin: 0 auto;
-    padding: 28px 16px 48px;
+    padding: 32px 16px 56px;
 }
 
+/* ---------- Encabezado ---------- */
+
 h1 {
-    font-size: 1.5rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
-    margin: 4px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 4px 0 8px;
+}
+
+h1::before {
+    content: "✓";
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 1.15rem;
+    font-weight: 700;
 }
 
 p.sub {
     color: var(--muted);
-    margin: 0 0 24px;
+    margin: 0 0 26px;
     font-size: .95rem;
     max-width: 62ch;
 }
@@ -87,8 +112,26 @@ p.sub {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 18px;
-    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* La tarjeta de resultados aparece con un movimiento suave al cargar el CSV */
+#resultCard {
+    animation: aparecer .35s ease-out;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 /* ---------- Zona de carga ---------- */
@@ -96,17 +139,38 @@ p.sub {
 .drop {
     position: relative;
     border: 2px dashed var(--border);
-    border-radius: var(--radius);
-    padding: 32px 20px;
+    border-radius: 12px;
+    padding: 34px 20px;
     text-align: center;
     cursor: pointer;
     transition: border-color .15s, background-color .15s;
+}
+
+.drop::before {
+    content: "↑";
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 1.35rem;
+    font-weight: 700;
+    transition: transform .15s;
 }
 
 .drop:hover,
 .drop.drag {
     border-color: var(--accent);
     background: var(--accent-soft);
+}
+
+.drop:hover::before,
+.drop.drag::before {
+    transform: translateY(-3px);
+    background: var(--card);
 }
 
 .drop:focus-within {
@@ -134,8 +198,8 @@ p.sub {
     display: flex;
     gap: 8px 12px;
     align-items: center;
-    margin-bottom: 14px;
-    padding-bottom: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
 }
@@ -145,7 +209,6 @@ p.sub {
     color: var(--muted);
 }
 
-/* Tras el segundo select, los botones se agrupan a la derecha */
 .toolbar button {
     white-space: nowrap;
 }
@@ -154,12 +217,12 @@ select,
 button {
     font: inherit;
     font-size: .9rem;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 9px 14px;
+    border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--card);
     color: var(--text);
-    transition: border-color .15s, background-color .15s;
+    transition: border-color .15s, background-color .15s, filter .15s;
 }
 
 select {
@@ -170,7 +233,7 @@ select {
 
 button {
     cursor: pointer;
-    font-weight: 550;
+    font-weight: 600;
 }
 
 select:hover,
@@ -197,6 +260,18 @@ button:focus-visible {
     outline-offset: 2px;
 }
 
+/* Botón principal: la imagen es lo que más se comparte */
+#exportImgBtn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+#exportImgBtn:hover {
+    background: var(--accent);
+    filter: brightness(1.1);
+}
+
 /* ---------- Tabla ---------- */
 
 .tablewrap {
@@ -204,7 +279,7 @@ button:focus-visible {
     -webkit-overflow-scrolling: touch;
     max-height: 70vh;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 table {
@@ -218,7 +293,7 @@ table {
 
 th,
 td {
-    padding: 10px 14px;
+    padding: 11px 14px;
     border-bottom: 1px solid var(--border);
     text-align: left;
     white-space: nowrap;
@@ -231,6 +306,7 @@ th {
     background: var(--head);
     font-weight: 600;
     font-size: .85rem;
+    border-bottom: 2px solid var(--border);
 }
 
 tbody tr:last-child td {
@@ -246,7 +322,7 @@ td.pdv {
     white-space: normal;
 }
 
-/* Columnas numéricas: Revisados, Pendientes y % a la derecha */
+/* Revisados, Pendientes y % a la derecha */
 th:nth-child(n+3):nth-child(-n+5),
 td:nth-child(n+3):nth-child(-n+5) {
     text-align: right;
@@ -258,42 +334,45 @@ td:last-child {
     text-align: center;
 }
 
-/* Marca lateral según el estado de cada PDV */
+/* Franja lateral según el estado de cada PDV */
 tbody tr td:first-child {
-    box-shadow: inset 3px 0 0 transparent;
+    box-shadow: inset 4px 0 0 transparent;
 }
 
 tbody tr:has(.dot.red) td:first-child {
-    box-shadow: inset 3px 0 0 var(--red);
+    box-shadow: inset 4px 0 0 var(--red);
 }
 
 tbody tr:has(.dot.yellow) td:first-child {
-    box-shadow: inset 3px 0 0 var(--yellow);
+    box-shadow: inset 4px 0 0 var(--yellow);
 }
 
 tbody tr:has(.dot.green) td:first-child {
-    box-shadow: inset 3px 0 0 var(--green);
+    box-shadow: inset 4px 0 0 var(--green);
 }
 
+/* Punto de estado con halo suave */
 .dot {
     display: inline-block;
     width: 14px;
     height: 14px;
     border-radius: 50%;
     vertical-align: middle;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
 }
 
 .dot.red {
     background: var(--red);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 22%, transparent);
 }
 
 .dot.yellow {
     background: var(--yellow);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--yellow) 26%, transparent);
 }
 
 .dot.green {
     background: var(--green);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 22%, transparent);
 }
 
 /* ---------- Mensajes ---------- */
@@ -318,11 +397,16 @@ tbody tr:has(.dot.green) td:first-child {
 
 @media (max-width: 640px) {
     .wrap {
-        padding: 20px 12px 40px;
+        padding: 22px 12px 44px;
     }
 
     h1 {
-        font-size: 1.3rem;
+        font-size: 1.35rem;
+    }
+
+    h1::before {
+        width: 34px;
+        height: 34px;
     }
 
     .card {
@@ -330,10 +414,9 @@ tbody tr:has(.dot.green) td:first-child {
     }
 
     .drop {
-        padding: 24px 14px;
+        padding: 26px 14px;
     }
 
-    /* Cada etiqueta con su selector en la misma fila */
     .toolbar label {
         flex: 1 1 60%;
     }
@@ -342,7 +425,6 @@ tbody tr:has(.dot.green) td:first-child {
         flex: 0 0 84px;
     }
 
-    /* Botones a todo el ancho, uno debajo del otro */
     .toolbar button {
         flex: 1 1 100%;
         margin-left: 0 !important;
@@ -352,5 +434,6 @@ tbody tr:has(.dot.green) td:first-child {
 @media (prefers-reduced-motion: reduce) {
     * {
         transition: none !important;
+        animation: none !important;
     }
 }
