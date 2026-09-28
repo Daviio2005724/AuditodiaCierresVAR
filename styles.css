@@ -271,12 +271,10 @@ button:focus-visible {
 
 table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse: separate; /* Obligatorio para que los bordes fijos no se rompan */
     border-spacing: 0;
     font-size: .9rem;
     min-width: 600px;
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
 }
 
 th,
@@ -288,14 +286,18 @@ td {
 }
 
 th {
+    position: -webkit-sticky; /* Para compatibilidad con Safari */
     position: sticky;
-    top: 0;
-    z-index: 1;
-    background: var(--head);
+    top: 0; /* Lo fija exactamente en la parte superior del contenedor */
+    z-index: 10; /* Asegura que quede por encima de las celdas (td) al bajar */
+    background: var(--head); /* Es VITAL que tenga fondo sólido, si es transparente se cruzará con el texto */
     color: var(--text);
     font-weight: 600;
     font-size: .85rem;
     border-bottom: 2px solid var(--border);
+    padding: 13px 16px;
+    text-align: left;
+    white-space: nowrap;
 }
 
 tbody tr:last-child td {
