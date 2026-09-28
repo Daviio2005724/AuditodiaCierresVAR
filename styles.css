@@ -1,24 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 :root {
-    --band: #0b2545;
+    /* Paleta principal */
+    --band: #1d5238;
     --band-text: #ffffff;
-    --band-muted: #aebbd0;
-    --bg: #eef1f6;
+    --band-muted: #91c1d6;
+    --bg: #faf3ea;
     --card: #ffffff;
-    --text: #111c2e;
-    --muted: #55637a;
-    --border: #d5dbe5;
-    --head: #e9edf4;
-    --hover: #f3f6fa;
-    --accent: #1b4b8f;
+    --text: #1d5238;
+    --muted: rgba(29, 82, 56, 0.65); /* #1d5238 con opacidad */
+    --border: #91c1d6;
+    --head: #faf3ea;
+    --hover: rgba(145, 193, 214, 0.2); /* #91c1d6 con opacidad */
+    --accent: #1d5238;
     --accent-ink: #ffffff;
-    --accent-soft: #e4ecf8;
+    --accent-soft: rgba(145, 193, 214, 0.3);
+    
+    /* Colores semánticos de estado */
     --red: #c8323c;
     --yellow: #d9a20b;
-    --green: #2b8a5e;
+    --green: #1d5238; /* Integrado al verde de la marca */
+    
     --radius: 6px;
-    --font: "IBM Plex Sans", "Segoe UI", -apple-system, Roboto, Arial, sans-serif;
+    --font: "Poppins", "Segoe UI", -apple-system, Roboto, Arial, sans-serif;
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -26,32 +30,32 @@
 
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-        --band: #071427;
-        --bg: #0b1220;
-        --card: #131c2d;
-        --text: #e4e9f2;
-        --muted: #8f9db5;
-        --border: #23304a;
-        --head: #182338;
-        --hover: #16213a;
-        --accent: #6f9ade;
-        --accent-ink: #0b1220;
-        --accent-soft: #182a47;
+        --band: #1d5238;
+        --bg: #113122; /* Tono más oscuro basado en #1d5238 */
+        --card: rgba(255, 255, 255, 0.05);
+        --text: #faf3ea;
+        --muted: #91c1d6;
+        --border: rgba(145, 193, 214, 0.3);
+        --head: rgba(255, 255, 255, 0.08);
+        --hover: rgba(255, 255, 255, 0.12);
+        --accent: #91c1d6;
+        --accent-ink: #1d5238;
+        --accent-soft: rgba(145, 193, 214, 0.15);
     }
 }
 
 :root[data-theme="dark"] {
-    --band: #071427;
-    --bg: #0b1220;
-    --card: #131c2d;
-    --text: #e4e9f2;
-    --muted: #8f9db5;
-    --border: #23304a;
-    --head: #182338;
-    --hover: #16213a;
-    --accent: #6f9ade;
-    --accent-ink: #0b1220;
-    --accent-soft: #182a47;
+    --band: #1d5238;
+    --bg: #113122;
+    --card: rgba(255, 255, 255, 0.05);
+    --text: #faf3ea;
+    --muted: #91c1d6;
+    --border: rgba(145, 193, 214, 0.3);
+    --head: rgba(255, 255, 255, 0.08);
+    --hover: rgba(255, 255, 255, 0.12);
+    --accent: #91c1d6;
+    --accent-ink: #1d5238;
+    --accent-soft: rgba(145, 193, 214, 0.15);
 }
 
 * {
@@ -118,7 +122,7 @@ p.sub {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: 0 1px 2px rgba(11, 37, 69, .06);
+    box-shadow: 0 1px 2px rgba(29, 82, 56, .1);
     padding: 22px;
     margin-bottom: 20px;
 }
