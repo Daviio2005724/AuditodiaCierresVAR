@@ -4,28 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>AuditodiaCierresVAR</title>
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+    <title>Auditoría de Cierres · VAR</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="wrap">
-        <h1>Generar Reporte de Cierres</h1>
-        <p class="sub">Carga el CSV de evidencias de cierre de caja y obtén el estado de revisión por punto de venta.</p>
+        <header class="page-head">
+            <h1>Generar Reporte de Cierres</h1>
+            <p class="sub">Carga el CSV de evidencias de cierre de caja y obtén el estado de revisión por punto de venta.</p>
+        </header>
 
-        <div class="card">
-            <div class="drop" id="drop">
-                <div><strong>Haz clic o arrastra aquí tu archivo CSV</strong></div>
+        <section class="card" aria-labelledby="upload-title">
+            <h2 id="upload-title" class="sr-only">Cargar archivo CSV</h2>
+            <div class="drop" id="drop" role="button" tabindex="0" aria-label="Zona de carga de archivo CSV">
+                <strong>Haz clic o arrastra aquí tu archivo CSV</strong>
                 <div class="hint">Debe tener las columnas: fecha, pdv, estado</div>
-                <input type="file" id="file" accept=".csv">
+                <input type="file" id="file" accept=".csv" aria-label="Seleccionar archivo CSV">
             </div>
-            <div class="err" id="err"></div>
-        </div>
+            <div class="err" id="err" role="alert" aria-live="polite"></div>
+        </section>
 
-        <div class="card" id="resultCard" style="display:none;">
+        <section class="card" id="resultCard" style="display:none;" aria-labelledby="results-title">
+            <h2 id="results-title" class="sr-only">Resultados del reporte</h2>
+
             <div class="toolbar">
-                <label>Umbral amarillo (días pendientes ≥)</label>
+                <label for="thYellow">Umbral amarillo (días pendientes ≥)</label>
                 <select id="thYellow">
                     <option value="1" selected>1</option>
                     <option value="2">2</option>
@@ -33,7 +41,8 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
-                <label>Umbral rojo (días pendientes ≥)</label>
+
+                <label for="thRed">Umbral rojo (días pendientes ≥)</label>
                 <select id="thRed">
                     <option value="1">1</option>
                     <option value="2" selected>2</option>
@@ -41,29 +50,47 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
-                <button id="exportBtn" style="margin-left:auto;">⬇ Exportar CSV</button>
-                <button id="exportImgBtn">🖼 Exportar imagen</button>
+
+                <button id="exportBtn" class="push-right" type="button" aria-label="Exportar reporte como CSV">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Exportar CSV
+                </button>
+
+                <button id="exportImgBtn" type="button" aria-label="Exportar reporte como imagen PNG">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Exportar imagen
+                </button>
             </div>
-            <div class="err" id="exportErr"></div>
+
+            <div class="err" id="exportErr" role="alert" aria-live="polite"></div>
+
             <div class="tablewrap">
                 <table id="table">
+                    <caption class="sr-only">Estado de revisión de cierres por punto de venta</caption>
                     <thead>
                         <tr>
-                            <th>PDV</th>
-                            <th>Días pendientes</th>
-                            <th>Días revisados</th>
-                            <th>Pendientes</th>
-                            <th>% Pendiente</th>
-                            <th>Estado</th>
+                            <th scope="col">PDV</th>
+                            <th scope="col">Días pendientes</th>
+                            <th scope="col">Días revisados</th>
+                            <th scope="col">Pendientes</th>
+                            <th scope="col">% Pendiente</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody id="tbody"></tbody>
                 </table>
             </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Referencia corregida -->
     <script src="script.js"></script>
 </body>
 
