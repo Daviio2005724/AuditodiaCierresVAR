@@ -100,7 +100,7 @@ document.getElementById('exportBtn').addEventListener('click', () => {
     errEl.textContent = '';
     if (!rows.length) { errEl.textContent = 'Primero carga un CSV.'; return; }
     try {
-        downloadCsv('reporte_cierres_pendientes.csv', toCsv(process()));
+        downloadCsv('reporte_cierres_var.csv', toCsv(process()));
     } catch (e) {
         errEl.textContent = 'No se pudo exportar el archivo.';
     }
@@ -202,7 +202,7 @@ document.getElementById('exportImgBtn').addEventListener('click', () => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'reporte_cierres_pendientes.png';
+            a.download = 'reporte_cierres_var.png';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
