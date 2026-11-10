@@ -16,7 +16,8 @@
     <div class="wrap">
         <header class="page-head">
             <h1>Generar Reporte de Cierres</h1>
-            <p class="sub">Carga el CSV de evidencias de cierre de caja y obtén el estado de revisión por punto de venta.</p>
+            <p class="sub">Carga el CSV de evidencias de cierre de caja y obtén el estado de revisión por punto de
+                venta.</p>
         </header>
 
         <section class="card" aria-labelledby="upload-title">
@@ -34,37 +35,27 @@
 
             <div class="toolbar">
                 <label for="thYellow">Umbral amarillo (días pendientes ≥)</label>
-                <select id="thYellow">
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                <select id="thYellow" aria-label="Umbral amarillo en días"></select>
 
                 <label for="thRed">Umbral rojo (días pendientes ≥)</label>
-                <select id="thRed">
-                    <option value="1">1</option>
-                    <option value="2" selected>2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                <select id="thRed" aria-label="Umbral rojo en días"></select>
 
                 <button id="exportBtn" class="push-right" type="button" aria-label="Exportar reporte como CSV">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
                     Exportar CSV
                 </button>
 
                 <button id="exportImgBtn" type="button" aria-label="Exportar reporte como imagen PNG">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
                     </svg>
                     Exportar imagen
                 </button>
