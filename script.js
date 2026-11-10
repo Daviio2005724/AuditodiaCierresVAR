@@ -1,5 +1,33 @@
 let rows = [];
 
+// ---- Umbrales: 1 a 30 días ----
+const MAX_THRESHOLD = 30;
+const TH_DEFAULTS = { thYellow: 1, thRed: 2 };
+
+function fillThresholds() {
+    Object.entries(TH_DEFAULTS).forEach(([id, def]) => {
+        const sel = document.getElementById(id);
+        sel.innerHTML = '';
+        for (let d = 1; d <= MAX_THRESHOLD; d++) {
+            sel.add(new Option(d, d));
+        }
+        sel.value = String(def);
+    });
+}
+
+// Mantiene coherencia: amarillo < rojo (si no, el amarillo nunca se aplicaría)
+function onThresholdChange(changedId) {
+    const y = document.getElementById('thYellow');
+    const r = document.getElementById('thRed');
+
+    if (+y.value >= +r.value) {
+        if (changedId === 'thYellow') r.value = String(Math.min(+y.value + 1, MAX_THRESHOLD));
+        if (+y.value >= +r.value) y.value = String(Math.max(+r.value - 1, 1));
+    }
+
+    if (rows.length) render();
+}
+
 function setupDrop() {
     const drop = document.getElementById('drop');
     const input = document.getElementById('file');
@@ -69,8 +97,8 @@ function render() {
     document.getElementById('resultCard').style.display = 'block';
 }
 
-document.getElementById('thYellow').addEventListener('change', () => { if (rows.length) render(); });
-document.getElementById('thRed').addEventListener('change', () => { if (rows.length) render(); });
+document.getElementById('thYellow').addEventListener('change', () => onThresholdChange('thYellow'));
+document.getElementById('thRed').addEventListener('change', () => onThresholdChange('thRed'));
 
 function toCsv(list) {
     const headers = ['PDV', 'Dias pendientes', 'Dias revisados', 'Pendientes', '% Pendiente', 'Estado'];
@@ -213,4 +241,5 @@ document.getElementById('exportImgBtn').addEventListener('click', () => {
     }
 });
 
+fillThresholds();
 setupDrop();
